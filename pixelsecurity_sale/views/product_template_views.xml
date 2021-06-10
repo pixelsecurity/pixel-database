@@ -6,16 +6,11 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
-                <!-- Have labor_product be an invisible field so that the compute function runs -->
-                <field name="labor_product" invisible="1"/>
-                <!-- 
-                    Only show the labor field if the product is a service, rather
-                    a consumable
-                 -->
-                <field name="labor_rate" widget='monetary' attrs="{'invisible': [('type', '!=', 'service')]}"/>
-                <field name="custom_labor_rate"/>
+                <field name="include_labor"/>
+                <field name="labor_product" attrs="{'invisible': [('include_labor', '=', False)], 'required': [('include_labor', '=', True)]}"/>
+                <field name="labor_rate" widget="monetary" attrs="{'invisible': [('include_labor', '=', False)], 'required': [('include_labor', '=', True)]}"/>
+                <field name="labor_hours" attrs="{'invisible': [('include_labor', '=', False)], 'required': [('include_labor', '=', True)]}"/>
             </xpath>
         </field>
     </record>
-
 </odoo>

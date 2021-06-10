@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Pixel Security: Labor Customization on Products',
+    'name': 'Labor Customization on Products',
     'summary': '''
         Pixel Security sells its products with labor services included which
         needs to be included on sale order line items
@@ -18,10 +18,10 @@
            be multiplied accordingly
         5. A new labor SO line should be added for each unique product
     ''',
-    'license': 'OEEL-1',
+    'license': 'OPL-1',
     'author': 'Odoo Inc',
     'website': 'https://www.odoo.com',
-    'category': 'custom',
+    'category': 'Development Services/Custom Development',
     'version': '1.0',
     'depends': [
         'sale_management',
