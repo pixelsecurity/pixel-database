@@ -27,7 +27,8 @@
         'sale_management',
     ],
     'data': [
-        'views/product_template_views.xml'
+        'views/product_template_views.xml',
+        'views/sale_views.xml'
     ],
     'installable': True,
     'application': False,
