@@ -16,15 +16,11 @@ class SaleOrder(models.Model):
         for line in child_line_ids:
             line.sequence = line.parent_line_id.sequence + 1
 
-
-
-
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     parent_line_id = fields.Many2one(name='Parent Line',comodel_name='sale.order.line',
         ondelete = 'set null')
-
     is_labor_line = fields.Boolean(string='Is Labor Cost Line', default=False, copy=False)
 
     @api.model_create_multi
