@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_cancel']" position="after">
                 <button name="organize_lines" type="object" string="Organize Lines"/>
+                <button name="calculate_all_labor_lines" type="object" string="Re-Calculate Labor"/>
+                <!-- <field name="compute_field"/> -->
             </xpath>
         </field>
     </record>
