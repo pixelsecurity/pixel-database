@@ -85,11 +85,13 @@ class SaleOrderLine(models.Model):
                         'product_uom_qty': labor_hours,
                         # 'product_uom_qty': 1,
                         # 'price_unit': labor,
+                        'sequence': line + 1
                         'parent_line_id': line.id,
                         'is_labor_line': True,
                     })
             new_lines.append(line)
-        order.sort_lines()
+        if(order != None):
+            order.sort_lines()
         return new_lines
 
     def unlink(self):
