@@ -13,9 +13,9 @@ class SaleOrder(models.Model):
         biggestN = 0
         #get the labor lines and also get the biggest sequence number on the OLs.
         for line in self.order_line:
-            if(line.sequence >= biggestN):
+            if line.sequence >= biggestN:
                 biggestN = line.sequence
-            if(line.is_labor_line):
+            if line.is_labor_line:
                 lines.append(line)
         biggestN += 1
         #Set the sequence of the labor lines to the biggest sequence # + 1
@@ -54,7 +54,7 @@ class SaleOrderLine(models.Model):
             labor_product = line.product_template_id.labor_product.product_variant_id
             #Set the parent order and sibling order lines.
             if not order_lines:
-                if(vals['order_id']):
+                if vals['order_id']:
                     order = self.env['sale.order'].browse(vals['order_id'])
                     order_lines = order.order_line
             #Get the labor line that belongs to the current product on the line
@@ -62,7 +62,7 @@ class SaleOrderLine(models.Model):
             #Set the hours that will be added or set to the labor line
             labor_hours = line.product_template_id.labor_hours * line.product_uom_qty
             #If the labor line exist, add the hours, else, create the labor line with the hours.
-            if(labor_line):
+            if labor_line:
                 labor_line.product_uom_qty += labor_hours
             else:
                 self.env['sale.order.line'].create({
@@ -78,7 +78,7 @@ class SaleOrderLine(models.Model):
                     })
             new_lines.append(line)
         #If there is an order, sort the lines.
-        if(order != None):
+        if order != None:
             order.sort_lines()
         return new_lines
 
@@ -87,23 +87,23 @@ class SaleOrderLine(models.Model):
             raise UserError(_('You can not remove an order line once the sales order is confirmed.\nYou should rather set the quantity to 0.'))
         for line in self:
             #If a labor line exists in the product of the line that will be deleted, substract the corresponding hours from the labor line.
-            if(line.product_template_id.include_labor):
+            if line.product_template_id.include_labor:
                 labor_product = line.product_template_id.labor_product.product_variant_id
                 labor_line = self.env['sale.order.line'].search([('order_id','=',line.order_id.id),('product_id','=',labor_product.id)])
                 labor_hours = line.product_id.product_tmpl_id.labor_hours * line.product_uom_qty
-                if(labor_line):
+                if labor_line:
                     #If the substraction of the hours is bigger than 0, then substract them, else, remove the labor line.
-                    if(labor_line.product_uom_qty - labor_hours >= 0):
+                    if labor_line.product_uom_qty - labor_hours >= 0:
                         labor_line.product_uom_qty -= labor_hours
                     else:
-                        if(labor_line not in self):
+                        if labor_line not in self:
                             labor_line.unlink()
         return super(SaleOrderLine, self).unlink()
 
     def write(self, values):
         #If there's a change in the quantity of the OL, add/substract hours to the corresponding labor line.
-        if('product_uom_qty' in values):
-            if(self.product_id.product_tmpl_id.include_labor):
+        if 'product_uom_qty' in values:
+            if self.product_id.product_tmpl_id.include_labor:
                 labor_product = self.product_id.product_tmpl_id.labor_product.product_variant_id
                 labor_line = self.env['sale.order.line'].search([('order_id','=',self.order_id._origin.id),('product_id','=',labor_product.id)])
                 delta = values['product_uom_qty'] - self.product_uom_qty 
