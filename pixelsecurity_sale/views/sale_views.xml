@@ -6,7 +6,8 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_cancel']" position="after">
-                <button name="organize_lines" type="object" string="Organize Lines"/>
+                <field name="sort_lines_compute" invisible='True'/>
+                <button name="sort_lines" type="object" string="Sort Lines"/>
             </xpath>
         </field>
     </record>
