@@ -27,9 +27,7 @@
     'version': '1.0',
     'depends': [
         'sale_management',
-        'sale_subscription' # Added because sale_subscription improperly calls
-        # create on sale order (without multi) and function needs to be called
-        # after this function is
+        'sale_subscription',
     ],
     'data': [
         'views/product_template_views.xml',
